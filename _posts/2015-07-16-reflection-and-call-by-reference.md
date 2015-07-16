@@ -104,7 +104,7 @@ public function testCallOfNonPublicMethod()
     $object = new SomeClass();
     $param  = $this->getMock('ParamClass');
 
-    $this->assertEquals($expected, Reflector::invokeArray($object, array(&$param));
+    $this->assertEquals($expected, Reflector::invokeArray($object, 'someMethod', array(&$param));
 }
 {% endhighlight %}
 
