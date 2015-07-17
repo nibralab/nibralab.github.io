@@ -17,40 +17,33 @@
                 </header>
 
                 <section>
-                {% for post in site.posts %}
-                {% unless post.next %}
-                </section>
-                <section>
+                    {% for post in site.posts %}
+                    {% unless post.next %}
                     <header>
                         <h2>{{ post.date | date: '%Y' }}</h2>
                     </header>
-                {% else %}
-                {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
-                {% capture nyear %}{{ post.next.date | date: '%Y' }}{% endcapture %}
-                {% if year != nyear %}
-                </section>
-                <section>
+                    {% else %}
+                    {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
+                    {% capture nyear %}{{ post.next.date | date: '%Y' }}{% endcapture %}
+                    {% if year != nyear %}
                     <header>
                         <h2>{{ post.date | date: '%Y' }}</h2>
                     </header>
-                {% endif %}
-                {% endunless %}
-
+                    {% endif %}
+                    {% endunless %}
                     <article>
                         {% if post.link %}
-                        <header>
-                            <h3 class="link-post"><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a> <a href="{{ post.link }}" target="_blank" title="{{ post.title }}"><span class="fa fa-link"></span></h3>
-                        </header>
+                        <h3 class="link-post"><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a> <a
+                                href="{{ post.link }}" target="_blank" title="{{ post.title }}"><span
+                                class="fa fa-link"></span></h3>
                         {% else %}
-                        <header>
-                            <h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
-                        </header>
+                        <h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+
                         <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
                         {% endif %}
                     </article>
-
+                    {% endfor %}
                 </section>
-                {% endfor %}
             </section>
 
             <aside class="article-author-side">
