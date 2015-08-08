@@ -115,7 +115,7 @@ All tests live in the `tests` directory,
 and we decide to introduce another level for the specs, in this case `Interop`.
 We create a corresponding test file `BasicTest.php` in the `tests/Interop` directory.
 
-```php
+```
 <?php
 
 namespace MyContainer\Tests\Interop;
@@ -148,7 +148,7 @@ This directly leeds to the first test.
 
 ###### Write a Test 
 
-```php
+```
 use MyContainer\Container;
 
 class BasicTest extends \PHPUnit_Framework_TestCase
@@ -166,7 +166,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase
 
 If you run PHPUnit, you'll get this result:
 
-```sh
+```
 $ phpunit
 ...
 PHP Fatal error:  Class 'MyContainer\Container' not found in .../Tests/Interop/BasicTest.php on line 11
@@ -178,7 +178,7 @@ Well, we knew that would happen.
 
 The next step is to implement the feature:
 
-```php
+```
 <?php
 
 namespace MyContainer;
@@ -192,7 +192,7 @@ class Container implements \Interop\Container\ContainerInterface
 
 Test:
 
-```sh
+```
 $ phpunit
 ...
 PHP Fatal error:  Class MyContainer\Container contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (Interop\Container\ContainerInterface::get, Interop\Container\ContainerInterface::has) in ...
@@ -201,7 +201,7 @@ PHP Fatal error:  Class MyContainer\Container contains 2 abstract methods and mu
 Your IDE may have told you that already. In many IDEs, the remedy is just a keystroke away.
 After adding the method stubs, the code has become this:
 
-```php
+```
 <?php
 namespace MyContainer;
 
@@ -241,7 +241,7 @@ class Container implements \Interop\Container\ContainerInterface
 ```
 Test:
 
-```sh
+```
 $ phpunit
 ...
 OK (1 tests, 1 assertions)
@@ -257,7 +257,7 @@ It looks like a list of features with checkboxes.
 To make really use of that feature, naming of the tests is important.
 With the tests as they are defined now, you'll get this result:
 
-```sh
+```
 $ phpunit --testdox
 ...
 MyContainer\Tests\Interop\Basic
@@ -270,7 +270,7 @@ One way would be to rename the test methods, but that does not always allow us t
 since no special characters are allowed, and all uppercase letters are converted to space-lowercase.
 The other option is to use the `@testdox` annotation.
 
-```php
+```
     /**
      * @testdox The container implements the `Interop\Container\ContainerInterface`
      */
@@ -284,7 +284,7 @@ The other option is to use the `@testdox` annotation.
 
 Now, the test result looks better:
 
-```sh
+```
 $ phpunit --testdox
 ...
 MyContainer\Tests\Interop\Basic
@@ -296,7 +296,7 @@ Satisfying the first test forced us to implement the two methods, that make up t
 That explains and justifies, why they were part of just one requirement - they can't be separated.
 So we hurry to add the remaining two tests to get even again.
 
-```php
+```
     /**
      * @testdox The container provides a `get` method
      */
@@ -320,7 +320,7 @@ So we hurry to add the remaining two tests to get even again.
 
 ###### Run the Test, See it Fail
 
-```sh
+```
 $ phpunit --testdox
 ...
 MyContainer\Tests\Interop\Basic
@@ -338,7 +338,7 @@ In order to be closer to the original text of the specification,
 
 you can put the *same* text to all three `@testdox` annotations:
 
-```php
+```
 class BasicTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -375,7 +375,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase
 
 The resulting report is much shorter and more comprehensive:
 
-```sh
+```
 $ phpunit --testdox
 ...
 MyContainer\Tests\Interop\Basic
@@ -398,7 +398,7 @@ There's no doubt about that the specification is met.
 The rest is left to you, the reader, as an exercise.
 You should end up with a result similar to this:
 
-```sh
+```
 MyContainer\Tests\Interop\Basic
  [x] The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
  [x] `get` takes one mandatory parameter: an entry identifier. It MUST be a string
