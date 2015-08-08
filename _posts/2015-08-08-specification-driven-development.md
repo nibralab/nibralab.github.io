@@ -149,6 +149,8 @@ This directly leeds to the first test.
 ###### Write a Test 
 
 {% highlight php %}
+<?php
+
 use MyContainer\Container;
 
 class BasicTest extends \PHPUnit_Framework_TestCase
@@ -203,6 +205,7 @@ After adding the method stubs, the code has become this:
 
 {% highlight php %}
 <?php
+
 namespace MyContainer;
 
 use Interop\Container\Exception\ContainerException;
@@ -273,6 +276,9 @@ since no special characters are allowed, and all uppercase letters are converted
 The other option is to use the `@testdox` annotation.
 
 {% highlight php %}
+<?php
+    ...
+    
     /**
      * @testdox The container implements the `Interop\Container\ContainerInterface`
      */
@@ -300,6 +306,9 @@ That explains and justifies, why they were part of just one requirement - they c
 So we hurry to add the remaining two tests to get even again.
 
 {% highlight php %}
+<?php
+    ...
+    
     /**
      * @testdox The container provides a `get` method
      */
@@ -344,6 +353,9 @@ In order to be closer to the original text of the specification,
 you can put the *same* text to all three `@testdox` annotations:
 
 {% highlight php %}
+<?php
+...
+
 class BasicTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -403,7 +415,6 @@ There's no doubt about that the specification is met.
 The rest is left to you, the reader, as an exercise.
 You should end up with a result similar to this:
 
-{% highlight bash %}
 MyContainer\Tests\Interop\Basic
  [x] The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
  [x] `get` takes one mandatory parameter: an entry identifier. It MUST be a string
@@ -426,7 +437,6 @@ MyContainer\Tests\Interop\DelegateLookup
  [x] Calls to the `has` method only return `true` if the entry is part of the container
  [x] If the entry is not part of the container, `has` returns `false`
  [x] If the fetched entry has dependencies, the lookup is performed on the delegate container
-{% endhighlight %}
 
 ## Conclusion
 
