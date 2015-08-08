@@ -115,13 +115,15 @@ All tests live in the `tests` directory,
 and we decide to introduce another level for the specs, in this case `Interop`.
 We create a corresponding test file `BasicTest.php` in the `tests/Interop` directory.
 
-    <?php
-    
-    namespace MyContainer\Tests\Interop;
-    
-    class BasicTest extends \PHPUnit_Framework_TestCase
-    {
-    }
+{% highlight php %}
+<?php
+
+namespace MyContainer\Tests\Interop;
+
+class BasicTest extends \PHPUnit_Framework_TestCase
+{
+}
+{% endhighlight %}
 
 #### For each Sentence of the Section
 
@@ -146,25 +148,29 @@ This directly leeds to the first test.
 
 ###### Write a Test 
 
-    use MyContainer\Container;
-    
-    class BasicTest extends \PHPUnit_Framework_TestCase
+{% highlight php %}
+use MyContainer\Container;
+
+class BasicTest extends \PHPUnit_Framework_TestCase
+{
+    public function testImplementsInterface()
     {
-        public function testImplementsInterface()
-        {
-            $container = new Container();
-            
-            $this->assertInstanceOf('Interop\\Container\\ContainerInterface', $container);
-        }
+        $container = new Container();
+        
+        $this->assertInstanceOf('Interop\\Container\\ContainerInterface', $container);
     }
+}
+{% endhighlight %}
 
 ###### Run the Test, See it Fail
 
 If you run PHPUnit, you'll get this result:
 
-    $ phpunit
-    ...
-    PHP Fatal error:  Class 'MyContainer\Container' not found in .../Tests/Interop/BasicTest.php on line 11
+{% highlight bash %}
+$ phpunit
+...
+PHP Fatal error:  Class 'MyContainer\Container' not found in .../Tests/Interop/BasicTest.php on line 11
+{% endhighlight %}
 
 Well, we knew that would happen.
 
@@ -172,67 +178,75 @@ Well, we knew that would happen.
 
 The next step is to implement the feature:
 
-    <?php
-    
-    namespace MyContainer;
-    
-    class Container implements \Interop\Container\ContainerInterface
-    {
-    }
+{% highlight php %}
+<?php
+
+namespace MyContainer;
+
+class Container implements \Interop\Container\ContainerInterface
+{
+}
+{% endhighlight %}
 
 > Of course the test class needs access to the source, either through an `include` or an autoloader.
 
 Test:
 
-    $ phpunit
-    ...
-    PHP Fatal error:  Class MyContainer\Container contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (Interop\Container\ContainerInterface::get, Interop\Container\ContainerInterface::has) in ...
+{% highlight bash %}
+$ phpunit
+...
+PHP Fatal error:  Class MyContainer\Container contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (Interop\Container\ContainerInterface::get, Interop\Container\ContainerInterface::has) in ...
+{% endhighlight %}
 
 Your IDE may have told you that already. In many IDEs, the remedy is just a keystroke away.
 After adding the method stubs, the code has become this:
 
-    <?php
-    namespace MyContainer;
-    
-    use Interop\Container\Exception\ContainerException;
-    use Interop\Container\Exception\NotFoundException;
-    
-    class Container implements \Interop\Container\ContainerInterface
+{% highlight php %}
+<?php
+namespace MyContainer;
+
+use Interop\Container\Exception\ContainerException;
+use Interop\Container\Exception\NotFoundException;
+
+class Container implements \Interop\Container\ContainerInterface
+{
+    /**
+     * Finds an entry of the container by its identifier and returns it.
+     *
+     * @param string $id Identifier of the entry to look for.
+     *
+     * @throws NotFoundException  No entry was found for this identifier.
+     * @throws ContainerException Error while retrieving the entry.
+     *
+     * @return mixed Entry.
+     */
+    public function get($id)
     {
-        /**
-         * Finds an entry of the container by its identifier and returns it.
-         *
-         * @param string $id Identifier of the entry to look for.
-         *
-         * @throws NotFoundException  No entry was found for this identifier.
-         * @throws ContainerException Error while retrieving the entry.
-         *
-         * @return mixed Entry.
-         */
-        public function get($id)
-        {
-            // TODO: Implement get() method.
-        }
-    
-        /**
-         * Returns true if the container can return an entry for the given identifier.
-         * Returns false otherwise.
-         *
-         * @param string $id Identifier of the entry to look for.
-         *
-         * @return boolean
-         */
-        public function has($id)
-        {
-            // TODO: Implement has() method.
-        }
+        // TODO: Implement get() method.
     }
+
+    /**
+     * Returns true if the container can return an entry for the given identifier.
+     * Returns false otherwise.
+     *
+     * @param string $id Identifier of the entry to look for.
+     *
+     * @return boolean
+     */
+    public function has($id)
+    {
+        // TODO: Implement has() method.
+    }
+}
+{% endhighlight %}
 
 Test:
 
-    $ phpunit
-    ...
-    OK (1 tests, 1 assertions)
+{% highlight bash %}
+$ phpunit
+...
+OK (1 tests, 1 assertions)
+{% endhighlight %}
 
 ##### Refactor the (Test) Code
 
@@ -244,10 +258,12 @@ It looks like a list of features with checkboxes.
 To make really use of that feature, naming of the tests is important.
 With the tests as they are defined now, you'll get this result:
 
-    $ phpunit --testdox
-    ...
-    MyContainer\Tests\Interop\Basic
-     [x] Implements interface
+{% highlight bash %}
+$ phpunit --testdox
+...
+MyContainer\Tests\Interop\Basic
+ [x] Implements interface
+{% endhighlight %}
 
 The feature text is derived from the name of the test method.
 Even if it looks sufficient at first sight, it is not:
@@ -256,22 +272,26 @@ One way would be to rename the test methods, but that does not always allow us t
 since no special characters are allowed, and all uppercase letters are converted to space-lowercase.
 The other option is to use the `@testdox` annotation.
 
-        /**
-         * @testdox The container implements the `Interop\Container\ContainerInterface`
-         */
-        public function testImplementsInterface()
-        {
-            $container = new Container();
-            
-            $this->assertInstanceOf('Interop\\Container\\ContainerInterface', $container);
-        }
+{% highlight php %}
+    /**
+     * @testdox The container implements the `Interop\Container\ContainerInterface`
+     */
+    public function testImplementsInterface()
+    {
+        $container = new Container();
+        
+        $this->assertInstanceOf('Interop\\Container\\ContainerInterface', $container);
+    }
+{% endhighlight %}
 
 Now, the test result looks better:
 
-    $ phpunit --testdox
-    ...
-    MyContainer\Tests\Interop\Basic
-     [x] The container implements the `Interop\Container\ContainerInterface`
+{% highlight bash %}
+$ phpunit --testdox
+...
+MyContainer\Tests\Interop\Basic
+ [x] The container implements the `Interop\Container\ContainerInterface`
+{% endhighlight %}
  
 ###### Write a Test 
 
@@ -279,34 +299,38 @@ Satisfying the first test forced us to implement the two methods, that make up t
 That explains and justifies, why they were part of just one requirement - they can't be separated.
 So we hurry to add the remaining two tests to get even again.
 
-        /**
-         * @testdox The container provides a `get` method
-         */
-        public function testMethodGetExists()
-        {
-            $container = new Container();
-            
-            $this->assertTrue(method_exists($container, 'get'));
-        }
-    
-        /**
-         * @testdox The container provides a `has` method
-         */
-        public function testMethodHasExists()
-        {
-            $container = new Container();
-            
-            $this->assertTrue(method_exists($container, 'has'));
-        }
+{% highlight php %}
+    /**
+     * @testdox The container provides a `get` method
+     */
+    public function testMethodGetExists()
+    {
+        $container = new Container();
+        
+        $this->assertTrue(method_exists($container, 'get'));
+    }
+
+    /**
+     * @testdox The container provides a `has` method
+     */
+    public function testMethodHasExists()
+    {
+        $container = new Container();
+        
+        $this->assertTrue(method_exists($container, 'has'));
+    }
+{% endhighlight %}
 
 ###### Run the Test, See it Fail
 
-    $ phpunit --testdox
-    ...
-    MyContainer\Tests\Interop\Basic
-     [x] The container implements the `Interop\Container\ContainerInterface`
-     [x] The container provides a `get` method
-     [x] The container provides a `has` method
+{% highlight bash %}
+$ phpunit --testdox
+...
+MyContainer\Tests\Interop\Basic
+ [x] The container implements the `Interop\Container\ContainerInterface`
+ [x] The container provides a `get` method
+ [x] The container provides a `has` method
+{% endhighlight %}
 
 The tests do not fail, which we expected.
 In this case, it is not a problem to deviate from the pure 'test-first' paradigm.
@@ -319,45 +343,49 @@ In order to be closer to the original text of the specification,
 
 you can put the *same* text to all three `@testdox` annotations:
 
-    class BasicTest extends \PHPUnit_Framework_TestCase
+{% highlight php %}
+class BasicTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @testdox The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
+     */
+    public function testImplementsInterface()
     {
-        /**
-         * @testdox The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
-         */
-        public function testImplementsInterface()
-        {
-            $container = new Container();
-            
-            $this->assertInstanceOf('Interop\\Container\\ContainerInterface', $container);
-        }
-    
-        /**
-         * @testdox The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
-         */
-        public function testMethodGetExists()
-        {
-            $container = new Container();
-            
-            $this->assertTrue(method_exists($container, 'get'));
-        }
-    
-        /**
-         * @testdox The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
-         */
-        public function testMethodHasExists()
-        {
-            $container = new Container();
-            
-            $this->assertTrue(method_exists($container, 'has'));
-        }
+        $container = new Container();
+        
+        $this->assertInstanceOf('Interop\\Container\\ContainerInterface', $container);
     }
+
+    /**
+     * @testdox The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
+     */
+    public function testMethodGetExists()
+    {
+        $container = new Container();
+        
+        $this->assertTrue(method_exists($container, 'get'));
+    }
+
+    /**
+     * @testdox The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
+     */
+    public function testMethodHasExists()
+    {
+        $container = new Container();
+        
+        $this->assertTrue(method_exists($container, 'has'));
+    }
+}
+{% endhighlight %}
 
 The resulting report is much shorter and more comprehensive:
 
-    $ phpunit --testdox
-    ...
-    MyContainer\Tests\Interop\Basic
-     [x] The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
+{% highlight bash %}
+$ phpunit --testdox
+...
+MyContainer\Tests\Interop\Basic
+ [x] The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
+{% endhighlight %}
 
 > The single entry composes the results of all three tests. The checkbox is checked only, if *all* three tests pass.
 > To identify the problem if a test fails, just run PHPUnit without the `--testdox` option,
@@ -375,28 +403,30 @@ There's no doubt about that the specification is met.
 The rest is left to you, the reader, as an exercise.
 You should end up with a result similar to this:
 
-    MyContainer\Tests\Interop\Basic
-     [x] The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
-     [x] `get` takes one mandatory parameter: an entry identifier. It MUST be a string
-     [x] A call to `get` can return anything (a mixed value)
-     [x] `get` throws an exception if the identifier is not known to the container
-     [x] Two successive calls to `get` with the same identifier return the same value
-     [x] `has` takes one unique parameter: an entry identifier
-     [x] `has` returns `true` if an entry identifier is known to the container and `false` if it is not
-    
-    MyContainer\Tests\Interop\Exceptions
-     [x] Exceptions directly thrown by the container implement the `Interop\Container\Exception\ContainerExceptionInterface`
-     [x] A call to the `get` method with a non-existing id throws an `Interop\Container\Exception\NotFoundExceptionInterface`
-    
-    MyContainer\Tests\Interop\DelegateLookup
-     [x] The Container implements the `Interop\Container\ContainerInterface`
-     [x] The Container provides the `registerDelegate` method to register a delegate container
-     [x] The Container accepts delegate containers implementing the `Interop\Container\ContainerInterface`
-     [x] Calls to the `get` method only return an entry if the entry is part of the container
-     [x] If the entry is not part of the container, `get` throws an `Interop\Container\Exception\NotFoundExceptionInterface`
-     [x] Calls to the `has` method only return `true` if the entry is part of the container
-     [x] If the entry is not part of the container, `has` returns `false`
-     [x] If the fetched entry has dependencies, the lookup is performed on the delegate container
+{% highlight bash %}
+MyContainer\Tests\Interop\Basic
+ [x] The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
+ [x] `get` takes one mandatory parameter: an entry identifier. It MUST be a string
+ [x] A call to `get` can return anything (a mixed value)
+ [x] `get` throws an exception if the identifier is not known to the container
+ [x] Two successive calls to `get` with the same identifier return the same value
+ [x] `has` takes one unique parameter: an entry identifier
+ [x] `has` returns `true` if an entry identifier is known to the container and `false` if it is not
+
+MyContainer\Tests\Interop\Exceptions
+ [x] Exceptions directly thrown by the container implement the `Interop\Container\Exception\ContainerExceptionInterface`
+ [x] A call to the `get` method with a non-existing id throws an `Interop\Container\Exception\NotFoundExceptionInterface`
+
+MyContainer\Tests\Interop\DelegateLookup
+ [x] The Container implements the `Interop\Container\ContainerInterface`
+ [x] The Container provides the `registerDelegate` method to register a delegate container
+ [x] The Container accepts delegate containers implementing the `Interop\Container\ContainerInterface`
+ [x] Calls to the `get` method only return an entry if the entry is part of the container
+ [x] If the entry is not part of the container, `get` throws an `Interop\Container\Exception\NotFoundExceptionInterface`
+ [x] Calls to the `has` method only return `true` if the entry is part of the container
+ [x] If the entry is not part of the container, `has` returns `false`
+ [x] If the fetched entry has dependencies, the lookup is performed on the delegate container
+{% endhighlight %}
 
 ## Conclusion
 
