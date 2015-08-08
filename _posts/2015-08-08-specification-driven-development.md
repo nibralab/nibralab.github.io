@@ -311,6 +311,8 @@ So we hurry to add the remaining two tests to get even again.
 The tests do not fail, which we expected.
 In this case, it is not a problem to deviate from the pure 'test-first' paradigm.
 
+##### Refactor the (Test) Code
+
 In order to be closer to the original text of the specification,  
 
 > The `Interop\Container\ContainerInterface` exposes two methods: `get` and `has`.
