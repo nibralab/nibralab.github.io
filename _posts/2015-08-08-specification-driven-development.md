@@ -40,7 +40,7 @@ Let's have a look at a concrete example.
 We want to write a dependency injection container following the 
 [upcoming PSR-11 standard](https://github.com/container-interop/fig-standards/blob/master/proposed/container.md),
 which interface is identical to the Interop Container (despite the namespace).
-Because the PSR interface is not yet awailable, we use the PSR-11 specification, replacing 'PSR' with 'Interop'.
+Because the PSR interface is not yet available, we use the PSR-11 specification, replacing 'PSR' with 'Interop'.
 Here is the specification:
 
 - - -
@@ -131,7 +131,7 @@ The first sentence of the section says
 
 ##### Identify the Requirement(s) 
 
-Although this sentence describes a property of the `Interop\Container\ContainerInterface`, it implicitely contains
+Although this sentence describes a property of the `Interop\Container\ContainerInterface`, it implicitly contains
 three requirements for our implementation:
 
   - The container implementation MUST implement the `Interop\Container\ContainerInterface`
