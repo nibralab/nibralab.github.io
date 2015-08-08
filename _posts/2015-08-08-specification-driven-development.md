@@ -365,7 +365,7 @@ The resulting report is much shorter and more comprehensive:
 
 The real value gets obvious, if you see the specification and the test result together:
 
-Spec: The `Interop\Container\ContainerInterface` exposes two methods: `get` and `has`.
+Spec: The `Interop\Container\ContainerInterface` exposes two methods: `get` and `has`.<br>
 Test: [x] The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has` 
 
 There's no doubt about that the specification is met.
