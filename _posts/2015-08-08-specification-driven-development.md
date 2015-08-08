@@ -415,28 +415,28 @@ There's no doubt about that the specification is met.
 The rest is left to you, the reader, as an exercise.
 You should end up with a result similar to this:
 
-MyContainer\Tests\Interop\Basic
- [x] The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
- [x] `get` takes one mandatory parameter: an entry identifier. It MUST be a string
- [x] A call to `get` can return anything (a mixed value)
- [x] `get` throws an exception if the identifier is not known to the container
- [x] Two successive calls to `get` with the same identifier return the same value
- [x] `has` takes one unique parameter: an entry identifier
- [x] `has` returns `true` if an entry identifier is known to the container and `false` if it is not
-
-MyContainer\Tests\Interop\Exceptions
- [x] Exceptions directly thrown by the container implement the `Interop\Container\Exception\ContainerExceptionInterface`
- [x] A call to the `get` method with a non-existing id throws an `Interop\Container\Exception\NotFoundExceptionInterface`
-
-MyContainer\Tests\Interop\DelegateLookup
- [x] The Container implements the `Interop\Container\ContainerInterface`
- [x] The Container provides the `registerDelegate` method to register a delegate container
- [x] The Container accepts delegate containers implementing the `Interop\Container\ContainerInterface`
- [x] Calls to the `get` method only return an entry if the entry is part of the container
- [x] If the entry is not part of the container, `get` throws an `Interop\Container\Exception\NotFoundExceptionInterface`
- [x] Calls to the `has` method only return `true` if the entry is part of the container
- [x] If the entry is not part of the container, `has` returns `false`
- [x] If the fetched entry has dependencies, the lookup is performed on the delegate container
+    MyContainer\Tests\Interop\Basic
+     [x] The Container implements the `Interop\Container\ContainerInterface` and exposes the methods: `get` and `has`
+     [x] `get` takes one mandatory parameter: an entry identifier. It MUST be a string
+     [x] A call to `get` can return anything (a mixed value)
+     [x] `get` throws an exception if the identifier is not known to the container
+     [x] Two successive calls to `get` with the same identifier return the same value
+     [x] `has` takes one unique parameter: an entry identifier
+     [x] `has` returns `true` if an entry identifier is known to the container and `false` if it is not
+    
+    MyContainer\Tests\Interop\Exceptions
+     [x] Exceptions directly thrown by the container implement the `Interop\Container\Exception\ContainerExceptionInterface`
+     [x] A call to the `get` method with a non-existing id throws an `Interop\Container\Exception\NotFoundExceptionInterface`
+    
+    MyContainer\Tests\Interop\DelegateLookup
+     [x] The Container implements the `Interop\Container\ContainerInterface`
+     [x] The Container provides the `registerDelegate` method to register a delegate container
+     [x] The Container accepts delegate containers implementing the `Interop\Container\ContainerInterface`
+     [x] Calls to the `get` method only return an entry if the entry is part of the container
+     [x] If the entry is not part of the container, `get` throws an `Interop\Container\Exception\NotFoundExceptionInterface`
+     [x] Calls to the `has` method only return `true` if the entry is part of the container
+     [x] If the entry is not part of the container, `has` returns `false`
+     [x] If the fetched entry has dependencies, the lookup is performed on the delegate container
 
 ## Conclusion
 
