@@ -5,7 +5,7 @@ url:              http://nibralab.github.io
 
 # Jekyll configuration
 permalink:   /:categories/:title/
-markdown:    kramdown
+markdown:    GFM
 highlighter: rouge
 sass:
   sass_dir: _sass
