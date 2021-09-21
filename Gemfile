@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'jekyll'
-gem 'jekyll-sitemap'
-gem 'octopress', '~> 3.0.0.rc.12'
+gem 'github-pages', '~> 219'
+gem 'jekyll-sitemap', '~> 1.4.0'
+gem 'octopress'
